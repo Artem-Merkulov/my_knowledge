@@ -1,0 +1,2 @@
+Обучение PostgreSQL на Wiki: https://wiki.glowbyteconsulting.com/pages/viewpage.action?pageId=180563900
+Администрирование PostgreSQL 16. Базовый курс: https://postgrespro.ru/education/courses/DBA1
