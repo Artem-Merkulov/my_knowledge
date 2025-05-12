@@ -73,3 +73,8 @@ GRANT SELECT_CATALOG_ROLE TO ваш_пользователь;
 ```
 GRANT SELECT ANY DICTIONARY TO ваш_пользователь;
 ```
+
+#### Смена пароля (подключиться как админ)
+```
+ALTER USER username IDENTIFIED BY new_pass ACCOUNT UNLOCK;
+```
