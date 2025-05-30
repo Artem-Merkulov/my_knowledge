@@ -1,10 +1,20 @@
 # Полезные команды Oracle
 
+#### Зайти в контейнер с Oracle через терминал
+```
+docker exec -u 0 -it oracle-oracle-db-1 bash
+```
+
+#### Создать нового пользователя
+```
+CREATE USER DBT IDENTIFIED BY dbt;
+```
+
 #### Раздать права
 ```
-sqlplus sys/system@localhost:1521/ORCLPDB1 AS sysdba -- Подключиться как админ.
+sqlplus sys/system@localhost:1521/ORCLPDB1 AS sysdba; -- Подключиться как админ.
 
-conn system/system@localhost:1521/ORCLPDB1 -- Подключиться как пользователь.
+conn system/system@localhost:1521/ORCLPDB1; -- Подключиться как пользователь.
 
 grant execute on dbms_crypto to SYSTEM; -- Раздать права.
 
@@ -77,4 +87,15 @@ GRANT SELECT ANY DICTIONARY TO ваш_пользователь;
 #### Смена пароля (подключиться как админ)
 ```
 ALTER USER username IDENTIFIED BY new_pass ACCOUNT UNLOCK;
+```
+
+#### Разблокировать пользователя
+```
+ALTER USER A_MERKULOV ACCOUNT UNLOCK;
+```
+
+#### Отключить блокировку для конкретного пользователя
+```
+ALTER USER A_MERKULOV PROFILE DEFAULT;
+ALTER PROFILE DEFAULT LIMIT FAILED_LOGIN_ATTEMPTS UNLIMITED PASSWORD_LOCK_TIME UNLIMITED;
 ```
