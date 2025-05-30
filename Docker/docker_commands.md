@@ -30,3 +30,7 @@
 `docker container prune` - удалить все остановленные контейнеры
 
 `docker rmi [идентификатор или имя контейнера]` - удалить образ
+
+`docker build [путь к файлу] -t [имя образа]` - создание docker образа из Dockerfile
+
+`docker build . - t myapp:0.1` - создание docker образа из Dockerfile
