@@ -2,7 +2,7 @@
 
 #### Зайти в контейнер с Oracle через терминал
 ```
-docker exec -u 0 -it oracle-oracle-db-1 bash
+docker exec -u 0 -it oracle_docker_compose bash
 ```
 
 #### Создать нового пользователя
@@ -32,7 +32,7 @@ grant create sequence to A_MERKULOV; -- Дать право создавать �
 
 GRANT CREATE ANY TABLE TO A_MERKULOV; -- Дать права управлять таблицами в других схемах.
 
-GRANT ALL PRIVILEGES TO A_MERKULOV; -- Дать все права.
+GRANT ALL PRIVILEGES TO DBT; -- Дать все права.
 ```
 
 ####
@@ -64,7 +64,7 @@ ALTER USER dwh_md QUOTA UNLIMITED ON USERS;
 
 #### Дать пользователю права на использование библиотеки `DBMS_CRYPTO`
 ```
-GRANT EXECUTE ON DBMS_CRYPTO TO UCB_STAGE;
+GRANT EXECUTE ON DBMS_CRYPTO TO DBT;
 ```
 `ALL PRIVILEGES` в этом случае не подходит.
 
@@ -81,7 +81,7 @@ GRANT SELECT_CATALOG_ROLE TO ваш_пользователь;
 
 #### Или самые полные права (только для доверенных пользователей)
 ```
-GRANT SELECT ANY DICTIONARY TO ваш_пользователь;
+GRANT SELECT ANY DICTIONARY TO DBT;
 ```
 
 #### Смена пароля (подключиться как админ)
@@ -96,6 +96,6 @@ ALTER USER A_MERKULOV ACCOUNT UNLOCK;
 
 #### Отключить блокировку для конкретного пользователя
 ```
-ALTER USER A_MERKULOV PROFILE DEFAULT;
+ALTER USER DBT PROFILE DEFAULT;
 ALTER PROFILE DEFAULT LIMIT FAILED_LOGIN_ATTEMPTS UNLIMITED PASSWORD_LOCK_TIME UNLIMITED;
 ```
