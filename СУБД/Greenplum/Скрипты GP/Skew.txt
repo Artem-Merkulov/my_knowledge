@@ -1,0 +1,41 @@
+# Перекос (Skew)
+
+```
+-- a_merkulov_psb.determinate_skew исходный текст
+
+CREATE OR REPLACE VIEW a_merkulov_psb.determinate_skew
+AS WITH all_seg AS (
+         SELECT count(1) AS seg_cnt
+           FROM gp_segment_configuration c
+          WHERE c.content >= 0 AND c.role = 'p'::"char"
+        ), tab_data AS (
+         SELECT "Window".cnt,
+            "Window".gp_segment_id,
+            count(1) OVER () AS total
+           FROM ( SELECT test_table.gp_segment_id,
+                    count(*) AS cnt
+                   FROM a_merkulov_psb.test_table
+                  GROUP BY test_table.gp_segment_id) "Window"(gp_segment_id, cnt)
+        ), agg_data AS (
+         SELECT tab_data.total,
+            max(tab_data.cnt) AS max_seg_rows,
+                CASE
+                    WHEN all_seg_1.seg_cnt > tab_data.total THEN 0::bigint
+                    ELSE min(tab_data.cnt)
+                END AS min_seg_rows
+           FROM all_seg all_seg_1,
+            tab_data
+          GROUP BY all_seg_1.seg_cnt, tab_data.total
+        )
+ SELECT agg_data.max_seg_rows,
+    agg_data.min_seg_rows,
+    round((agg_data.max_seg_rows - agg_data.min_seg_rows)::numeric * 100.0 / agg_data.max_seg_rows::numeric) AS skew_prc,
+    all_seg.seg_cnt - agg_data.total AS empty_seg_cnt
+   FROM agg_data,
+    all_seg;
+
+-- Permissions
+
+ALTER TABLE a_merkulov_psb.determinate_skew OWNER TO mtsb;
+GRANT ALL ON TABLE a_merkulov_psb.determinate_skew TO mtsb;
+```
